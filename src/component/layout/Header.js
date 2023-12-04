@@ -1,11 +1,14 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FaHome, FaRegIdBadge } from "react-icons/fa";
 import { IoMdLogIn } from "react-icons/io";
+import { MdDashboard } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 
 export const Header = () => {
+  const {user} = useSelector((state)=> state.adminInfo)
   return (
     <Navbar expand="md" data-bs-theme='dark' className="bg-body-tertiary">
       <Container>
@@ -13,9 +16,19 @@ export const Header = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto fs-5">
-            <Link className='nav-link' to="/"><FaHome />Home</Link>
-            <Link className='nav-link' to="/login"><IoMdLogIn />Login</Link>
-            <Link className='nav-link' to="/signup"><FaRegIdBadge />Signup</Link>
+            {
+              user?._id ? (<>
+                <Link className='nav-link d-flex align-items-center gap-1' to="/"><FaHome />Home</Link>
+                <Link className='nav-link d-flex align-items-center gap-1' to="/dashboard">
+                  <MdDashboard /> Dashboard
+                </Link>
+                <Link className='nav-link d-flex align-items-center gap-1' to="/login"><IoMdLogIn />Log Out</Link>
+              </>) :
+                (<>
+                  <Link className='nav-link d-flex align-items-center gap-1' to="/login"><IoMdLogIn />Login</Link>
+                  <Link className='nav-link d-flex align-items-center gap-1' to="/signup"><FaRegIdBadge />Signup</Link>
+                </>)
+            }
           </Nav>
         </Navbar.Collapse>
       </Container>

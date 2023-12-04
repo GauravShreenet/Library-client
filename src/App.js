@@ -11,6 +11,7 @@ import {Books} from './component/books/Books';
 import {Students} from './component/students/Students';
 import {BurrowHistory} from './component/burrowHistory/BurrowHistory';
 import { MyProfile } from './component/profile/MyProfile';
+import { PrivateRouter } from './component/layout/private-route/PrivateRouter';
 
 function App() {
   return (
@@ -22,12 +23,36 @@ function App() {
         <Route path='/signup' element={<SignUp />} />
 
         {/* private pages */}
-        <Route path='/admin-signup' element={<AdminSign />} />
-        <Route path='/dashboard' element={<Dashboard />} />
-        <Route path='/books' element={<Books />} />
-        <Route path='/students' element={<Students />} />
-        <Route path='/burrowhistory' element={<BurrowHistory />} />
-        <Route path='/myprofile' element={<MyProfile />} />
+        <Route path='/admin-signup' element={
+        <PrivateRouter>
+          <AdminSign />
+        </PrivateRouter>
+        } />
+        <Route path='/dashboard' element={
+        <PrivateRouter>
+          <Dashboard />
+        </PrivateRouter>
+        } />
+        <Route path='/books' element={
+        <PrivateRouter>
+          <Books />
+        </PrivateRouter>
+        } />
+        <Route path='/students' element={
+        <PrivateRouter>
+          <Students />
+        </PrivateRouter>
+        } />
+        <Route path='/burrowhistory' element={
+        <PrivateRouter>
+          <BurrowHistory />
+        </PrivateRouter>
+        } />
+        <Route path='/myprofile' element={
+        <PrivateRouter>
+          <MyProfile />
+        </PrivateRouter>
+        } />
 
       </Routes>
       <ToastContainer />

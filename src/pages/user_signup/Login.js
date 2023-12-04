@@ -1,17 +1,26 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { MainLayout } from '../../component/layout/MainLayout'
 import { Button, Form } from 'react-bootstrap'
 import { CustomInput } from '../../component/custom-input/CustomInput'
 import { toast } from 'react-toastify'
 import { loginUser } from '../../helper/axiosHelper'
 import { getUserAction } from './userAction'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router'
 
 const Login = () => {
 
   const emailRef = useRef("");
   const passwordRef = useRef("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { user } = useSelector((state)=> state.adminInfo)
+
+  useEffect(()=>{
+    // redirect to dsahboard
+   user?._id && navigate("/dashboard");
+  }, [user?._id])
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();

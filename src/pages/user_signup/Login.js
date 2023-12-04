@@ -10,19 +10,33 @@ const Login = () => {
   const emailRef = useRef("");
   const passwordRef = useRef("");
 
-  const handleOnSubmit = async(e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
 
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    if(!email || !password){
+    if (!email || !password) {
       return toast.error("Both input field must be filled")
     }
 
     ///axios
-    const {status, message} = await loginUser({email, password});
+    const { status, message, jwts } = await loginUser({ email, password });
+    
+
+    if (status === "success") {
+      const { accessJWT, refreshJWT } = jwts;
+      sessionStorage.setItem("accessJWT", accessJWT)
+      localStorage.setItem("refreshJWT", refreshJWT);
+
+      return;
+
+    }
     toast[status](message);
+
+    //fetch user info and redirect to dashboard
+
+
 
   }
 

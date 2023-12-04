@@ -11,7 +11,8 @@ import {Books} from './component/books/Books';
 import {Students} from './component/students/Students';
 import {BurrowHistory} from './component/burrowHistory/BurrowHistory';
 import { MyProfile } from './component/profile/MyProfile';
-import { PrivateRouter } from './component/layout/private-route/PrivateRouter';
+import { AdminPrivateRouter, PrivateRouter } from './component/layout/private-route/PrivateRouter';
+import { MyBook } from './component/my-books/MyBook';
 
 function App() {
   return (
@@ -34,18 +35,23 @@ function App() {
         </PrivateRouter>
         } />
         <Route path='/books' element={
-        <PrivateRouter>
+        <AdminPrivateRouter>
           <Books />
-        </PrivateRouter>
+        </AdminPrivateRouter>
         } />
         <Route path='/students' element={
-        <PrivateRouter>
+        <AdminPrivateRouter>
           <Students />
-        </PrivateRouter>
+        </AdminPrivateRouter>
         } />
         <Route path='/burrowhistory' element={
-        <PrivateRouter>
+        <AdminPrivateRouter>
           <BurrowHistory />
+        </AdminPrivateRouter>
+        } />
+        <Route path='/mybooks' element={
+        <PrivateRouter>
+          <MyBook />
         </PrivateRouter>
         } />
         <Route path='/myprofile' element={

@@ -4,11 +4,14 @@ import { Button, Form } from 'react-bootstrap'
 import { CustomInput } from '../../component/custom-input/CustomInput'
 import { toast } from 'react-toastify'
 import { loginUser } from '../../helper/axiosHelper'
+import { getUserAction } from './userAction'
+import { useDispatch } from 'react-redux';
 
 const Login = () => {
 
   const emailRef = useRef("");
   const passwordRef = useRef("");
+  const dispatch = useDispatch();
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +31,8 @@ const Login = () => {
       const { accessJWT, refreshJWT } = jwts;
       sessionStorage.setItem("accessJWT", accessJWT)
       localStorage.setItem("refreshJWT", refreshJWT);
-
+      //fetch user info and redirect to dashboard
+      dispatch(getUserAction());
       return;
 
     }

@@ -4,13 +4,19 @@ const rootEP = process.env.REACT_APP_ROOTAPI;
 const userEP = rootEP + "/users";
 
 const getAccessJWT = () => {
-    return sessionStorage.getItem('accessJWT') 
+    const token = sessionStorage.getItem('accessJWT') 
+    return token;
+}
+
+const getRefreshJWT = () => {
+    return localStorage.getItem('refreshJWT') 
 }
 
 const axiosProcessor = async (obj) => {
-    if (obj.isPrivate){
+    const {isPrivate, refreshToken} = obj
+    if (isPrivate){
         obj.headers = {
-            Authorization: getAccessJWT(),
+            Authorization: refreshToken ? getRefreshJWT() : getAccessJWT(),
         }
     }
     
@@ -51,3 +57,13 @@ export const getUser = async () => {
         isPrivate: true,
     });
 }
+
+export const getNewAccessJwt = async () => {
+    return axiosProcessor({
+        method: 'get',
+        url: userEP + "/get-accessjwt",
+        isPrivate: true,
+        refreshToken: true,
+    });
+}
+

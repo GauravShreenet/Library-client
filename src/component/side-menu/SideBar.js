@@ -11,7 +11,7 @@ export const SideBar = () => {
     const { user } = useSelector((state) => state.adminInfo);
     return (
         <div className='p-2'>
-            <div className="top mt-5">CL-Admin</div>
+            <div className="top mt-5">CL-{(user?.role)}</div>
             <hr />
             <div className="bottom">
                 <ul className='list-unstyled fw-bold'>

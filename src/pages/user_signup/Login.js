@@ -4,7 +4,7 @@ import { Button, Form } from 'react-bootstrap'
 import { CustomInput } from '../../component/custom-input/CustomInput'
 import { toast } from 'react-toastify'
 import { loginUser } from '../../helper/axiosHelper'
-import { getUserAction } from './userAction'
+import { autoLogin, getUserAction } from './userAction'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router'
 
@@ -20,7 +20,8 @@ const Login = () => {
   useEffect(()=>{
     // redirect to dsahboard
    user?._id && navigate("/dashboard");
-  }, [user?._id])
+   !user?._id && dispatch(autoLogin());
+  }, [user?._id, navigate, dispatch])
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();

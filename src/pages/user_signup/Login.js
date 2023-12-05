@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import { loginUser } from '../../helper/axiosHelper'
 import { autoLogin, getUserAction } from './userAction'
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Login = () => {
 
@@ -14,14 +14,17 @@ const Login = () => {
   const passwordRef = useRef("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { user } = useSelector((state)=> state.adminInfo)
 
+  const fromLocation = location?.state?.from?.location?.pathname || "/dashboard"
+
   useEffect(()=>{
     // redirect to dsahboard
-   user?._id && navigate("/dashboard");
+   user?._id && navigate(fromLocation);
    !user?._id && dispatch(autoLogin());
-  }, [user?._id, navigate, dispatch])
+  }, [user?._id, navigate, dispatch, fromLocation])
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();

@@ -24,6 +24,18 @@ const axiosProcessor = async (obj) => {
         const { data } = await axios(obj)
         return data;
     } catch (error) {
+        console.log(error)
+
+        const errorMsg = error?.response?.data?.message
+        if(errorMsg.includes("jwt expired")){
+            // get new access token
+
+            const { accessJWT } = await getNewAccessJwt();
+            if(accessJWT){
+                sessionStorage.setItem("accessJWT", accessJWT)
+                return axiosProcessor(obj);
+            }
+        }
         return {
             status: 'error',
             message: error.message
@@ -45,6 +57,14 @@ export const loginUser = async (data) => {
     return axiosProcessor({
         method: 'post',
         url: userEP + "/login",
+        data,
+    });
+}
+
+export const logOutUser = async (data) => {
+    return axiosProcessor({
+        method: 'post',
+        url: userEP + "/logout",
         data,
     });
 }

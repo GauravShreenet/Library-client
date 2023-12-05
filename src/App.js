@@ -35,19 +35,19 @@ function App() {
         </PrivateRouter>
         } />
         <Route path='/books' element={
-        <AdminPrivateRouter>
+        <PrivateRouter>
           <Books />
-        </AdminPrivateRouter>
+        </PrivateRouter>
         } />
         <Route path='/students' element={
-        <AdminPrivateRouter>
+        <PrivateRouter>
           <Students />
-        </AdminPrivateRouter>
+        </PrivateRouter>
         } />
         <Route path='/burrowhistory' element={
-        <AdminPrivateRouter>
+        <PrivateRouter>
           <BurrowHistory />
-        </AdminPrivateRouter>
+        </PrivateRouter>
         } />
         <Route path='/mybooks' element={
         <PrivateRouter>

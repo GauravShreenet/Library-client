@@ -1,14 +1,17 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaHome, FaRegIdBadge } from "react-icons/fa";
 import { IoMdLogIn } from "react-icons/io";
 import { MdDashboard } from 'react-icons/md';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logOutAction } from '../../pages/user_signup/userAction';
 
 export const Header = () => {
   const {user} = useSelector((state)=> state.adminInfo)
+  const dispatch = useDispatch();
+
   return (
     <Navbar expand="md" data-bs-theme='dark' className="bg-body-tertiary">
       <Container>
@@ -22,7 +25,9 @@ export const Header = () => {
                 <Link className='nav-link d-flex align-items-center gap-1' to="/dashboard">
                   <MdDashboard /> Dashboard
                 </Link>
-                <Link className='nav-link d-flex align-items-center gap-1' to="/login"><IoMdLogIn />Log Out</Link>
+                <Link 
+                onClick={()=>dispatch(logOutAction(user.email))}
+                className='nav-link d-flex align-items-center gap-1' to="/"><IoMdLogIn />Log Out</Link>
               </>) :
                 (<>
                   <Link className='nav-link d-flex align-items-center gap-1' to="/login"><IoMdLogIn />Login</Link>

@@ -3,6 +3,7 @@ import { CustomInput } from '../../component/custom-input/CustomInput'
 import { Button, Form } from 'react-bootstrap';
 import { postAdminUser } from '../../helper/axiosHelper';
 import {toast} from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 const initalState = {
   fName: "",
@@ -88,6 +89,12 @@ const AdminSign = () => {
       required: true,
     },
   ]
+
+  const {user} = useSelector((state)=>state.adminInfo);
+
+  if(user?.role !== 'admin'){
+    return <h1>Unauthorize</h1>
+  }
   return (
     <div>
       <Form onSubmit={handleOnSubmit} className="form-center border shadow-lg p-4 rounded-4 mt-5">

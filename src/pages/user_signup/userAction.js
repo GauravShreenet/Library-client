@@ -1,4 +1,4 @@
-import { getNewAccessJwt, getUser } from "../../helper/axiosHelper"
+import { getNewAccessJwt, getUser, logOutUser } from "../../helper/axiosHelper"
 import {setUser} from './userSlice';
 
 export const getUserAction = () => async(dispatch) => {
@@ -38,4 +38,19 @@ export const autoLogin = () => async(dispatch) => {
     }
 
     dispatch(getUserAction());
+}
+
+export const logOutAction = (email) => async(dispatch) => {
+     // clear the user state
+     const accessJWT = sessionStorage.getItem("accessJWT")
+     dispatch(setUser({}));
+
+    // clear browser storage
+    sessionStorage.removeItem('accessJWT')
+    localStorage.removeItem('refreshJWT')
+    
+    // delete both jwts from server - both table
+    await logOutUser({email, accessJWT})
+
+    //redirect to homepage
 }

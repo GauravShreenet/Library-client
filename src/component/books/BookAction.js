@@ -1,11 +1,18 @@
 import { toast } from "react-toastify"
 import { getBooks, postBook } from "../../helper/axiosHelper"
-import { setBooks } from './bookSlice';
+import { setBooks, setABook } from './bookSlice';
 
 export const getAllBooksAction = () => async (dispatch) => {
     const {status, message, books} = await getBooks()
     if(status === 'success') {
         dispatch(setBooks(books))
+    }
+}
+
+export const getABookAction = (_id) => async (dispatch) => {
+    const {status, message, books} = await getBooks(_id)
+    if(status === 'success') {
+        dispatch(setABook(books))
     }
 }
 
@@ -22,3 +29,4 @@ export const postNewBookAction = (bookObj) => async(dispatch)=>{
         dispatch(getAllBooksAction())
     }
 }
+

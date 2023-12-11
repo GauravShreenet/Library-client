@@ -17,6 +17,7 @@ import { NewBook } from './component/books/NewBook';
 import { useEffect } from 'react';
 import { getAllBooksAction } from './component/books/BookAction';
 import { useDispatch } from 'react-redux';
+import { UpdateBook } from './component/books/UpdateBook';
 
 function App() {
 
@@ -53,6 +54,11 @@ function App() {
         <Route path='/new-books' element={
         <AdminPrivateRouter>
           <NewBook />
+        </AdminPrivateRouter>
+        } />
+        <Route path='/edit-book/:_id' element={
+        <AdminPrivateRouter>
+          <UpdateBook />
         </AdminPrivateRouter>
         } />
 

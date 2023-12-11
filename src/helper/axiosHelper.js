@@ -99,11 +99,11 @@ export const postBook = async (data) => {
     });
 }
 
-export const getBooks = async (data) => {
+export const getBooks = async (_id) => {
 
     return axiosProcessor({
         method: 'get',
-        url: bookEP,
+        url: _id ? bookEP + "/" + _id : bookEP,
         isPrivate: true,
     });
 }

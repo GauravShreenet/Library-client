@@ -13,8 +13,19 @@ import {BurrowHistory} from './component/burrowHistory/BurrowHistory';
 import { MyProfile } from './component/profile/MyProfile';
 import { AdminPrivateRouter, PrivateRouter } from './component/layout/private-route/PrivateRouter';
 import { MyBook } from './component/my-books/MyBook';
+import { NewBook } from './component/books/NewBook';
+import { useEffect } from 'react';
+import { getAllBooksAction } from './component/books/BookAction';
+import { useDispatch } from 'react-redux';
 
 function App() {
+
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(getAllBooksAction())
+  },[dispatch])
+
   return (
     <div className="">
       <Routes>
@@ -35,10 +46,16 @@ function App() {
         </PrivateRouter>
         } />
         <Route path='/books' element={
-        <PrivateRouter>
+        <AdminPrivateRouter>
           <Books />
-        </PrivateRouter>
+        </AdminPrivateRouter>
         } />
+        <Route path='/new-books' element={
+        <AdminPrivateRouter>
+          <NewBook />
+        </AdminPrivateRouter>
+        } />
+
         <Route path='/students' element={
         <PrivateRouter>
           <Students />

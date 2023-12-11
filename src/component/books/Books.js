@@ -1,23 +1,25 @@
 import React from 'react'
 import { UserLayout } from '../layout/UserLayout'
 import { useSelector } from 'react-redux';
+import { Button, Container } from 'react-bootstrap';
+import { BookTable } from './BookTable';
+import { Link } from 'react-router-dom';
 
-export const Books = ({children}) => {
-  const {user} = useSelector((state)=>state.adminInfo);
+export const Books = () => {
   return (
-    user?.role === 'admin' ? (<UserLayout title="Books">
+    <UserLayout title="Books">
       Books
-      {
-        user?.role === "admin" ? (<div>Books</div>)
-        :
-        (
-          <h1>UnAuthorize</h1>
-        )
-      }
-      </UserLayout>)
-    :
-    (
-      <h1>Unauthorize</h1>
-    )
+      <Container>
+      <div className='Books'>
+        <div className="text-end mb-3">
+          <Link to="/new-books">
+            <Button variant='primary'>Add New Book</Button>
+          </Link> 
+        </div>
+        <BookTable />
+      </div>
+      </Container>
+      
+    </UserLayout>
   )
 }

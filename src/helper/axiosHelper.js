@@ -107,3 +107,21 @@ export const getBooks = async (_id) => {
         isPrivate: true,
     });
 }
+
+export const updateBook = async (data) => {
+
+    return axiosProcessor({
+        method: 'put',
+        url: bookEP,
+        data,
+        isPrivate: true,
+    });
+}
+export const deleteBook = async (_id) => {
+
+    return axiosProcessor({
+        method: 'delete',
+        url: bookEP + "/" + _id,
+        isPrivate: true,
+    });
+}

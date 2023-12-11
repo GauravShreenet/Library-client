@@ -1,5 +1,5 @@
 import { toast } from "react-toastify"
-import { getBooks, postBook } from "../../helper/axiosHelper"
+import { deleteBook, getBooks, postBook, updateBook } from "../../helper/axiosHelper"
 import { setBooks, setABook } from './bookSlice';
 
 export const getAllBooksAction = () => async (dispatch) => {
@@ -27,6 +27,35 @@ export const postNewBookAction = (bookObj) => async(dispatch)=>{
     if(status === 'success'){
         // call the function that fetches all the books and updates the store
         dispatch(getAllBooksAction())
+    }
+}
+
+export const updateBookAction = (bookObj) => async(dispatch)=>{
+    const pending = updateBook(bookObj);
+    toast.promise(pending, {
+        pending: "please wait...",
+    })
+    const {status, message} = await pending;
+    toast[status](message);
+
+    if(status === 'success'){
+        // call the function that fetches all the books and updates the store
+        dispatch(getAllBooksAction());
+        dispatch(setABook({}));
+    }
+}
+export const deleteBookAction = (_id) => async(dispatch)=>{
+    const pending = deleteBook(_id);
+    toast.promise(pending, {
+        pending: "please wait...",
+    })
+    const {status, message} = await pending
+    toast[status](message);
+
+    if(status === 'success'){
+        // call the function that fetches all the books and updates the store
+        dispatch(getAllBooksAction());
+        return true;
     }
 }
 

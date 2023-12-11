@@ -1,35 +1,58 @@
 import React, { useEffect, useState } from 'react'
 import { UserLayout } from '../layout/UserLayout'
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Container, Form } from 'react-bootstrap';
-import { Link, useParams } from 'react-router-dom';
+import { Button, Container, Form, FormGroup } from 'react-bootstrap';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { CustomInput } from '../custom-input/CustomInput';
-import { getABookAction, postNewBookAction } from './BookAction';
+import { deleteBookAction, getABookAction, postNewBookAction, updateBookAction } from './BookAction';
 
 export const UpdateBook = () => {
     const dispatch = useDispatch();
-     //grab the id from the url
-    const {_id} = useParams();
+    const navigate = useNavigate();
+    //grab the id from the url
+    const { _id } = useParams();
     const [form, setForm] = useState({})
 
     // get the selectedBook from state and populate in the form
-    const {selectedBooks} = useSelector(state => state.bookInfo)
-   
-    
-    
-    
+    const { selectedBooks } = useSelector(state => state.bookInfo)
 
-    useEffect(()=>{
+
+
+
+
+    useEffect(() => {
         // use that id to fetch a single book from server   
-        if(_id !== form._id){
+        if (_id !== form._id) {
             dispatch(getABookAction(_id))
             setForm(selectedBooks)
         }
-    },[_id, dispatch, selectedBooks, form._id])
+    }, [_id, dispatch, selectedBooks, form._id])
 
-    const handleOnSubmit = (e) => {}
+    const handleOnSubmit = (e) => {
+        e.preventDefault();
+        if(!window.confirm("Are you sure you want to update this Book?")){
+            return;
+        }
 
-    const handleOnChange = (e) => {}
+        const {__v, updatedAt, isbn, createdAt, ...rest} = form
+        dispatch(updateBookAction(rest));
+    }
+
+    const handleOnChange = (e) => {
+        const { name, value } = e.target;
+        setForm({
+            ...form,
+            [name]: value
+        })
+    }
+
+    const handleOnDelete = async () => {
+        if(window.confirm('Are you sure you want to delete the book?')){
+           const isDeleted = await dispatch(deleteBookAction(_id))
+
+           isDeleted && navigate("/books");
+        }
+    }
 
     console.log(form)
 
@@ -40,6 +63,7 @@ export const UpdateBook = () => {
             placeholder: "Book Name",
             type: "text",
             required: true,
+            value: form.name,
         },
         {
             label: "Thumbnail Link",
@@ -47,6 +71,7 @@ export const UpdateBook = () => {
             placeholder: "https://...",
             type: "url",
             required: true,
+            value: form.thumbnail,
         },
         {
             label: "Author",
@@ -54,12 +79,14 @@ export const UpdateBook = () => {
             placeholder: "Author Name",
             type: "text",
             required: true,
+            value: form.author,
         },
         {
             label: "Publish Year",
             name: "publishYr",
             placeholder: "2000",
             type: "number",
+            value: form.publishYr,
         },
         {
             label: "ISBN",
@@ -67,6 +94,8 @@ export const UpdateBook = () => {
             placeholder: "eg. 84451235",
             type: "text",
             required: true,
+            disabled: true,
+            value: form.isbn,
         },
         {
             label: "Description",
@@ -76,6 +105,7 @@ export const UpdateBook = () => {
             as: "textarea",
             required: true,
             rows: 5,
+            value: form.description,
         },
     ]
 
@@ -88,21 +118,35 @@ export const UpdateBook = () => {
                 <div>
                     <Form onSubmit={handleOnSubmit} className="my-2">
                         <h4>Update data in the form below</h4>
+                        <Form.Group className='mb-3'>
+                            <Form.Select name='status' onChange={handleOnChange}>
+                                <option value="">--Select One--</option>
+                                <option value="active" selected={form.status === 'active'}>Active{" "}</option>
+                                <option value="inactive" selected={form.status === 'inactive'}>Inactive{" "}</option>
+                            </Form.Select>
+
+                        </Form.Group>
                         <hr />
                         {
                             inputs.map(
                                 (item, i) => (
-                                    <CustomInput key={i} {...item} onChange={handleOnChange}/>
+                                    <CustomInput key={i} {...item} onChange={handleOnChange} />
                                 )
                             )
                         }
                         <div className="d-grid mt-2">
-                            <Button type='submit' variant='primary'>
+                            <Button variant='primary' type='submit'>
                                 {" "}
                                 Update Book
                             </Button>
                         </div>
                     </Form>
+
+                    <div className="d-grid mb-2">
+                        <Button
+                        onClick={handleOnDelete}
+                        variant='danger'>Delete Book</Button>
+                    </div>
                 </div>
             </Container>
 

@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logOutAction } from '../../pages/user_signup/userAction';
 
 export const Header = () => {
-  const {user} = useSelector((state)=> state.adminInfo)
+  const {user} = useSelector((state)=> state.userInfo)
   const dispatch = useDispatch();
 
   return (

@@ -90,7 +90,7 @@ const AdminSign = () => {
     },
   ]
 
-  const {user} = useSelector((state)=>state.adminInfo);
+  const {user} = useSelector((state)=>state.userInfo);
 
   if(user?.role !== 'admin'){
     return <h1>Unauthorize</h1>

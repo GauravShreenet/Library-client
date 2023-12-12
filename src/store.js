@@ -4,7 +4,7 @@ import bookReducer from './component/books/bookSlice';
 
 const store = configureStore({
     reducer: {
-        adminInfo: userReducer,
+        userInfo: userReducer,
         bookInfo: bookReducer,
     }
 })

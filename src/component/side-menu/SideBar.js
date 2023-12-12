@@ -8,7 +8,7 @@ import { ImProfile } from "react-icons/im";
 import { useSelector } from 'react-redux';
 
 export const SideBar = () => {
-    const { user } = useSelector((state) => state.adminInfo);
+    const { user } = useSelector((state) => state.userInfo);
     return (
         <div className='p-2'>
             <div className="top mt-5">CL-{(user?.role)}</div>

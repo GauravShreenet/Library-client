@@ -4,6 +4,7 @@ import { CustomCarousel } from '../../component/carousel/CustomCarousel'
 import { Alert, Col, Container, Form, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { CustomCard } from '../../component/custom-card/CustomCard';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
     const [filteredBooks, setFilteredBook] = useState([]);
@@ -48,7 +49,9 @@ const Home = () => {
                     <Row className='my-3'>
                         <Col className='d-flex justify-content-center flex-wrap gap-3'>
                             {filteredBooks.map((book, i) => (
+                                <Link key={i} to={`/book/${book._id}`}>
                                 <CustomCard {...book} />
+                                </Link>
                             ))}
                             {filteredBooks.length < 1 && <Alert variant='warning'>No Book Found </Alert>}
                         </Col>

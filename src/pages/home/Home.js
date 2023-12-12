@@ -1,13 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { MainLayout } from '../../component/layout/MainLayout'
 import { CustomCarousel } from '../../component/carousel/CustomCarousel'
-import { Col, Container, Form, Row } from 'react-bootstrap';
+import { Alert, Col, Container, Form, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { CustomCard } from '../../component/custom-card/CustomCard';
 
 const Home = () => {
-
+    const [filteredBooks, setFilteredBook] = useState([]);
     const { book } = useSelector((state) => state.bookInfo)
+
+     
+
+    useEffect(()=>{
+        const activeBooks = book.filter((book)=> book.status === 'active')
+        setFilteredBook(activeBooks)
+    },[book])
+
+    const handleOnSearch = (e) => {
+        const {value} = e.target;
+        const str = value.toLowerCase()
+        const searchedBook = book.filter((book)=> book.status === 'active' && book.name.toLowerCase().includes(str));
+
+        setFilteredBook(searchedBook);
+    }
+
     return (
         <MainLayout>
             <div>
@@ -18,9 +34,11 @@ const Home = () => {
                 <Container className='mt-5'>
                     <Row>
                         <Col className="d-flex justify-content-between">
-                            <label htmlFor="">20 Books Found</label>
+                            <label htmlFor="">{filteredBooks.length} Books Found</label>
                             <div>
-                                <Form.Control placeholder="Search book by name..." />
+                                <Form.Control 
+                                onChange={handleOnSearch}
+                                placeholder="Search book by name..." />
                             </div>
                             
                         </Col>
@@ -28,10 +46,11 @@ const Home = () => {
                     </Row>
                     <hr />
                     <Row className='my-3'>
-                        <Col className='d-flex justify-content-between flex-wrap gap-3'>
-                            {book.map((book, i) => (
-                                book.status === 'active' && <CustomCard {...book} />
+                        <Col className='d-flex justify-content-center flex-wrap gap-3'>
+                            {filteredBooks.map((book, i) => (
+                                <CustomCard {...book} />
                             ))}
+                            {filteredBooks.length < 1 && <Alert variant='warning'>No Book Found </Alert>}
                         </Col>
                     </Row>
                 </Container>

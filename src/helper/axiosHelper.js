@@ -29,7 +29,7 @@ const axiosProcessor = async (obj) => {
         console.log(error)
 
         const errorMsg = error?.response?.data?.message
-        if(errorMsg.includes("jwt expired")){
+        if(errorMsg?.includes("jwt expired")){
             // get new access token
 
             const { accessJWT } = await getNewAccessJwt();
@@ -76,6 +76,13 @@ export const getUser = async () => {
     return axiosProcessor({
         method: 'get',
         url: userEP,
+        isPrivate: true,
+    });
+}
+export const getAllUsers = async () => {
+    return axiosProcessor({
+        method: 'get',
+        url: userEP + "/all-users",
         isPrivate: true,
     });
 }

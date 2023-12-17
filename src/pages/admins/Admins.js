@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import { UserLayout } from '../layout/UserLayout'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUserAction } from '../../pages/user_signup/userAction';
-import { UsersTable } from './UsersTable';
+import { UserLayout } from '../../component/layout/UserLayout';
+import { UsersTable } from '../../component/students/UsersTable';
 
-export const Students = () => {
+export const Admins = () => {
   const {user} = useSelector((state)=>state.userInfo);
   const dispatch = useDispatch();
 
@@ -13,8 +13,8 @@ export const Students = () => {
   },[user?.role, dispatch])
 
   return (
-    user?.role === 'admin' ? (<UserLayout title="Students">
-      <UsersTable role="student" />
+    user?.role === 'admin' ? (<UserLayout title="admins">
+      <UsersTable role="admin" />
     </UserLayout>)
     :
     (

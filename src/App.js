@@ -20,6 +20,7 @@ import { useDispatch } from 'react-redux';
 import { UpdateBook } from './component/books/UpdateBook';
 import { BookLanding } from './pages/book-landing/BookLanding';
 import { autoLogin } from './pages/user_signup/userAction';
+import { Admins } from './pages/admins/Admins';
 
 function App() {
 
@@ -70,6 +71,11 @@ function App() {
         <Route path='/students' element={
         <PrivateRouter>
           <Students />
+        </PrivateRouter>
+        } />
+        <Route path='/all-admins' element={
+        <PrivateRouter>
+          <Admins />
         </PrivateRouter>
         } />
         <Route path='/burrowhistory' element={

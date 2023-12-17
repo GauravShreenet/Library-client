@@ -34,6 +34,11 @@ export const SideBar = () => {
                                     </Link>
                                 </li>
                                 <li>
+                                    <Link className='text-decoration-none nav-link d-flex align-items-center gap-2 mt-4' to="/all-admins">
+                                        <PiStudent />All-Admins
+                                    </Link>
+                                </li>
+                                <li>
                                     <Link className='text-decoration-none nav-link d-flex align-items-center gap-2 mt-4' to="/burrowhistory">
                                         <MdHistory />Burrow History
                                     </Link>

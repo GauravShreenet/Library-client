@@ -28,11 +28,11 @@ export const UsersTable = ({role}) => {
                 </thead>
                 <tbody>
                     {
-                        users?.map(({_id, status, fname, lname, phone, email, createdAt}, i) => (
+                        users?.map(({_id, status, fName, lName, phone, email, createdAt}, i) => (
                             <tr key={i}>
                                 <td>{i + 1}</td>
                                 <td>{status}</td>
-                                <td>{fname + " " + lname}</td>
+                                <td>{fName + " " + lName}</td>
                                 <td>{phone}</td>
                                 <td>{email}</td>
                                 <td>{createdAt?.slice(0, 10)}</td>

@@ -145,3 +145,21 @@ export const postBurrow = async (data) => {
         isPrivate: true,
     });
 }
+
+export const fetchBurrows = async () => {
+
+    return axiosProcessor({
+        method: 'get',
+        url: burrowEP,
+        isPrivate: true,
+    });
+}
+
+export const returnBurrowedBook = async (_id) => {
+
+    return axiosProcessor({
+        method: 'patch',
+        url: burrowEP + "/" + _id,
+        isPrivate: true,
+    });
+}

@@ -111,7 +111,7 @@ const SignUp = () => {
         <div className="d-grid mt-2">
           <Button type='submit' variant='primary'>
             {" "}
-            Create New Admin
+            Register
           </Button>
         </div>
         <div className="text-end mt-5">

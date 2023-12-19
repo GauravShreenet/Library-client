@@ -92,7 +92,7 @@ const Login = () => {
           <div className="d-grid mt-2">
             <Button type='submit' variant='primary'>
               {" "}
-              Admin Login
+              Login
             </Button>
           </div>
           <div className="text-end mt-5">

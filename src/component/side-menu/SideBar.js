@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { MdDashboard } from "react-icons/md";
-import { FaBook } from "react-icons/fa";
+import { FaBook, FaStar } from "react-icons/fa";
 import { PiStudent } from "react-icons/pi";
 import { MdHistory } from "react-icons/md";
 import { ImProfile } from "react-icons/im";
@@ -26,6 +26,11 @@ export const SideBar = () => {
                                 <li>
                                     <Link className='text-decoration-none nav-link d-flex align-items-center gap-2 mt-4' to="/books">
                                         <FaBook /> Books
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link className='text-decoration-none nav-link d-flex align-items-center gap-2 mt-4' to="/reviews">
+                                        <FaStar /> Reviews
                                     </Link>
                                 </li>
                                 <li>

@@ -8,13 +8,14 @@ import { FaStar } from "react-icons/fa6";
 import { FaStarHalfAlt } from "react-icons/fa";
 import { Link } from 'react-router-dom'
 import { postBurrowAction } from '../../component/burrowHistory/BurrowAction'
+import { ReviewStars } from '../../component/review-star/ReviewStars'
 
 export const BookLanding = () => {
     const dispatch = useDispatch();
     const { _id } = useParams();
     const [showReview, setShowReview] = useState(false);
 
-    const { selectedBooks } = useSelector(state => state.bookInfo)
+    const { selectedBooks, reviews } = useSelector(state => state.bookInfo)
     const { user } = useSelector(state => state.userInfo)
 
     useEffect(() => {
@@ -24,7 +25,7 @@ export const BookLanding = () => {
     const { thumbnail, name, author, publishYr, description, isAvailable, dueDate } = selectedBooks
 
     const handleOnBurrow = () => {
-        if (window.confirm("Are you sure?")){
+        if (window.confirm("Are you sure?")) {
             const obj = {
                 bookId: _id,
                 bookName: name,
@@ -38,6 +39,11 @@ export const BookLanding = () => {
     //grab the id from url parameter
     //fetch book form server to get latest update and put in our state
     //pull the book info form the state and implement in UI below
+
+    const bookSpecificReviews = reviews.filter((review) => review.bookId === _id)
+    const avgRating = bookSpecificReviews.reduce((acc, item) => acc + item.rating, 0) / bookSpecificReviews.length
+
+
 
     return (
 
@@ -53,11 +59,7 @@ export const BookLanding = () => {
                             {author} - {publishYr}
                         </p>
                         <p>
-                            <FaStar className='text-warning' />
-                            <FaStar className='text-warning' />
-                            <FaStar className='text-warning' />
-                            <FaStar className='text-warning' />
-                            <FaStarHalfAlt className='text-warning' />
+                            <ReviewStars />
                         </p>
 
                         <p className='pt-5'>
@@ -67,18 +69,18 @@ export const BookLanding = () => {
                         <p className='d-grid pt-2'>
                             {
                                 isAvailable ? (
-                                    user?._id 
-                                    ? ( <Button onClick={handleOnBurrow}>Burrow Book</Button> )
-                                    : ( 
-                                    <Link to ="/login"
-                                    className='d-grid'>
-                                        <Button>Login To Burrow</Button>
-                                    </Link>
-                                     )
-                                ) 
-                                : (<Button disabled={true}>Available From: {dueDate?.slice(0, 10)}</Button>)
+                                    user?._id
+                                        ? (<Button onClick={handleOnBurrow}>Burrow Book</Button>)
+                                        : (
+                                            <Link to="/login"
+                                                className='d-grid'>
+                                                <Button>Login To Burrow</Button>
+                                            </Link>
+                                        )
+                                )
+                                    : (<Button disabled={true}>Available From: {dueDate?.slice(0, 10)}</Button>)
                             }
-                            
+
                         </p>
                     </Col>
                 </Row>
@@ -88,73 +90,34 @@ export const BookLanding = () => {
                         <div className='button-group'>
                             <ButtonGroup aria-label="Basic example">
                                 <Button variant="primary" onClick={() => setShowReview(false)}>Description</Button>
-                                <Button variant="warning" onClick={()=> setShowReview(true)}>Review</Button>
+                                <Button variant="warning" onClick={() => setShowReview(true)}>Review</Button>
                             </ButtonGroup>
                         </div>'
                         {
                             showReview ? (<>
-                                <div className='d-flex gap-3 shadow mb-3'>
-                            <div className="avatar">GS</div>
-                            <div className="review">
-                                <h4>Best Book Ever</h4>
-                                <p className='mb-4'>
-                                    <span>
-                                        <FaStar className='text-warning' />
-                                        <FaStar className='text-warning' />
-                                        <FaStar className='text-warning' />
-                                        <FaStar className='text-warning' />
-                                        <FaStarHalfAlt className='text-warning' />
-                                    </span>{" "}
-                                    <small>5 days ago.</small>
-                                </p>
-                                <p>
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Autem quo sint officia, unde fugiat reiciendis optio voluptatum reprehenderit eaque. Quis asperiores quaerat iusto delectus magnam sapiente exercitationem modi ex aperiam?
-                                </p>
-                            </div>
-                        </div>
+                                {
+                                    bookSpecificReviews.map((review) => (
+                                        <div className='d-flex gap-3 shadow mb-3'>
+                                            <div className="avatar">GS</div>
+                                            <div className="review">
+                                                <h4>{review.title}</h4>
+                                                <p className='mb-4'>
+                                                    <span>
+                                                        <ReviewStars avgRating={review.rating} />
+                                                    </span>{" "}
+                                                    <small>5 days ago.</small>
+                                                </p>
+                                                <p>
+                                                    {review.message}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    ))
+                                }
 
-                        <div className='d-flex gap-3 shadow mb-3'>
-                            <div className="avatar">GS</div>
-                            <div className="review">
-                                <h4>Best Book Ever</h4>
-                                <p className='mb-4'>
-                                    <span>
-                                        <FaStar className='text-warning' />
-                                        <FaStar className='text-warning' />
-                                        <FaStar className='text-warning' />
-                                        <FaStar className='text-warning' />
-                                        <FaStarHalfAlt className='text-warning' />
-                                    </span>{" "}
-                                    <small>5 days ago.</small>
-                                </p>
-                                <p>
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Autem quo sint officia, unde fugiat reiciendis optio voluptatum reprehenderit eaque. Quis asperiores quaerat iusto delectus magnam sapiente exercitationem modi ex aperiam?
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className='d-flex gap-3 shadow mb-3'>
-                            <div className="avatar">GS</div>
-                            <div className="review">
-                                <h4>Best Book Ever</h4>
-                                <p className='mb-4'>
-                                    <span>
-                                        <FaStar className='text-warning' />
-                                        <FaStar className='text-warning' />
-                                        <FaStar className='text-warning' />
-                                        <FaStar className='text-warning' />
-                                        <FaStarHalfAlt className='text-warning' />
-                                    </span>{" "}
-                                    <small>5 days ago.</small>
-                                </p>
-                                <p>
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Autem quo sint officia, unde fugiat reiciendis optio voluptatum reprehenderit eaque. Quis asperiores quaerat iusto delectus magnam sapiente exercitationem modi ex aperiam?
-                                </p>
-                            </div>
-                        </div>
                             </>) : description
                         }
-                        
+
                     </Col>
                 </Row>
             </Container>

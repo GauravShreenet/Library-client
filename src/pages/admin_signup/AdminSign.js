@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { CustomInput } from '../../component/custom-input/CustomInput'
 import { Button, Form } from 'react-bootstrap';
-import { postAdminUser } from '../../helper/axiosHelper';
+import { postUsers } from '../../helper/axiosHelper';
 import {toast} from 'react-toastify';
 import { useSelector } from 'react-redux';
 
@@ -35,7 +35,7 @@ const AdminSign = () => {
       return alert("Password do not match")
     }
 
-    const pending = postAdminUser(rest)
+    const pending = postUsers(rest)
     toast.promise({
       pending: 'Please wait',
       // success: 'request success',

@@ -2,10 +2,13 @@ import React, { useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { CustomInput } from '../custom-input/CustomInput'
 import { Button } from 'react-bootstrap'
-import { FaStar, FaStarHalfAlt } from 'react-icons/fa'
+import { FaStar } from 'react-icons/fa'
+import { useDispatch } from 'react-redux';
+import { postNewReviewAction } from '../books/BookAction'
 
 export const Review = ({ bookId, _id, bookName }) => {
 
+    const dispatch = useDispatch();
     const [form, setForm] = useState({rating: 5})
 
     const handleOnChange = (e) => {
@@ -25,15 +28,15 @@ export const Review = ({ bookId, _id, bookName }) => {
 
     const handleOnSubmit = (e) => {
         e.preventDefault()
-        const obj = {...form, bookId, _id, bookName};
-
+        const obj = {...form, bookId, burrowHistoryId: _id, bookName};
+        dispatch(postNewReviewAction(obj))
     }
 
     return (
         <div>
             <Form onSubmit={handleOnSubmit}>
                 <div><h3>You are giving reviews to {bookName}</h3></div><hr />
-                <CustomInput name="title" label='Title' required={true} placeholder="Best book ever..." />
+                <CustomInput name="title" label='Title' required={true} placeholder="Best book ever..." onChange={handleOnChange}/>
                 
                 <Form.Group>
                     <Form.Label>Select Rating</Form.Label>
@@ -46,7 +49,7 @@ export const Review = ({ bookId, _id, bookName }) => {
                     </div>
                 </Form.Group><br />
                 
-                <CustomInput as='textArea' name="message" label='Detail Review' required={true} rows="5" placeholder="Best book ever..." />
+                <CustomInput as='textArea' name="message" label='Detail Review' required={true} rows="5" placeholder="Best book ever..." onChange={handleOnChange}/>
 
                 
                 <div className="d-grid">

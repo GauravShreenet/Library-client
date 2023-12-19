@@ -10,8 +10,8 @@ export const MyBook = () => {
   const dispatch = useDispatch()
 
   useEffect(()=>{
-    user?.role === 'admin' && dispatch(fetchBurrowAction())
-  },[user?.role, dispatch])
+    dispatch(fetchBurrowAction())
+  },[dispatch])
 
   return (
     <UserLayout title={"My Books burrow history"}>

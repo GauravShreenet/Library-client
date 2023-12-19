@@ -34,7 +34,7 @@ export const UpdateBook = () => {
             return;
         }
 
-        const {__v, updatedAt, isbn, createdAt, ...rest} = form
+        const {__v, updatedAt, isAvailable, isbn, createdAt, dueDate, ...rest} = form
         dispatch(updateBookAction(rest));
     }
 

@@ -61,7 +61,7 @@ export const BurrowTable = ({ userId }) => {
                 </thead>
                 <tbody>
                     {
-                        burrows?.map(({thumbnail, _id, userName, bookName, bookId, dueDate, isReturned, returnedDate, createdAt}, i) => (
+                        burrows?.map(({thumbnail, _id, userName, bookName, bookId, dueDate, isReturned, returnedDate, createdAt, reviewGiven}, i) => (
                             <tr key={i} className={isReturned ? "bg-success" : "bg-warning"} style={{background: isReturned ? "green" : "yellow"}}>
                                 <td>{i + 1}</td>
                                 <td><img src={thumbnail} alt="" style={{ height: '20vh', width: '20vh' }} /></td>
@@ -73,7 +73,7 @@ export const BurrowTable = ({ userId }) => {
                                 <td>{dueDate?.slice(0, 10)}</td>
                                 {
                                     userId ? (<td>
-                                        {isReturned ? (<Button onClick={()=>{handleOnReview({_id, bookId, bookName})}} variant='warning'>Leave Review</Button>) : <Button onClick={()=>handleOnReturn(_id)}>Return Book</Button>}
+                                        {isReturned ? (reviewGiven ? (<span className='text-success fw-bolder'>Review Given</span>) : <Button onClick={()=>{handleOnReview({_id, bookId, bookName})}} variant='warning'>Leave Review</Button>) : <Button onClick={()=>handleOnReturn(_id)}>Return Book</Button>}
                                     </td>)
                                     :
                                     (<td variant={isReturned ? "success" : "warning"}>{isReturned ? "Returned" : "Not-Yet"}</td>)

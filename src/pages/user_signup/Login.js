@@ -80,7 +80,7 @@ const Login = () => {
     <MainLayout>
       <div>
         <Form onSubmit={handleOnSubmit} className="form-center border shadow-lg p-4 rounded-4 mt-5">
-          <h2>Welcome Admin</h2>
+          <h2>Welcome Back !</h2>
           <hr />
           {
             inputs.map(
@@ -94,6 +94,9 @@ const Login = () => {
               {" "}
               Admin Login
             </Button>
+          </div>
+          <div className="text-end mt-5">
+            Don't have an account? <a href="/signup">Register Now</a>
           </div>
         </Form>
       </div>

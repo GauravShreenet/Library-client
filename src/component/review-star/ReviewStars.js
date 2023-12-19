@@ -14,7 +14,7 @@ export const ReviewStars = ({avgRating = maxStar}) => {
                 {Array(fullRating).fill("").map((item, i)=> (<FaStar className='text-warning' />))}
                 {isHalfStar && <FaStarHalfAlt className='text-warning' />}
                 {Array(emptyStar).fill("").map((item, i)=> (<FaRegStar className='text-warning' />))}
-                / {avgRating}
+                / {Number(avgRating.toFixed(2))}
             </span>{" "}
         </div>
     )

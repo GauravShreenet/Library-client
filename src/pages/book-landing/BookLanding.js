@@ -41,7 +41,7 @@ export const BookLanding = () => {
     //pull the book info form the state and implement in UI below
 
     const bookSpecificReviews = reviews.filter((review) => review.bookId === _id)
-    const avgRating = bookSpecificReviews.reduce((acc, item) => acc + item.rating, 0) / bookSpecificReviews.length
+    const avgRating = bookSpecificReviews.reduce((acc, item) => acc + item.rating, 0) / bookSpecificReviews?.length
 
 
 
@@ -59,7 +59,7 @@ export const BookLanding = () => {
                             {author} - {publishYr}
                         </p>
                         <p>
-                            <ReviewStars />
+                            <ReviewStars avgRating={avgRating}/>
                         </p>
 
                         <p className='pt-5'>

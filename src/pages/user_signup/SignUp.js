@@ -4,6 +4,7 @@ import { Button, Form } from 'react-bootstrap';
 import { postAdminUser, postUsers } from '../../helper/axiosHelper';
 import {toast} from 'react-toastify';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 const initalState = {
   fName: "",
@@ -15,6 +16,7 @@ const initalState = {
 }
 
 const SignUp = () => {
+  const navigate = useNavigate();
 
   const [form, setForm] = useState(initalState);
 
@@ -43,6 +45,9 @@ const SignUp = () => {
 
     const {status, message} = await pending;
     toast[status](message); //toast.success or toast.error according to the status
+    if(status === 'success'){
+      navigate('/login');
+    }
   }
 
   const inputs = [
@@ -89,7 +94,7 @@ const SignUp = () => {
     },
   ]
 
-  const {user} = useSelector((state)=>state.userInfo);
+  
 
   return (
     <div>

@@ -46,7 +46,7 @@ const axiosProcessor = async (obj) => {
     }
 }
 
-export const postUsers = async (role, data) => {
+export const postUsers = async (data, role) => {
     const url = role === 'admin' ? userEP + "/admin-user" : userEP
     return axiosProcessor({
         method: 'post',
